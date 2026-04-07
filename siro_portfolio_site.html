@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Siro Nobert | AWS Cloud Practitioner</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #FF9900;
+            --secondary: #232F3E;
+            --accent: #146EB4;
+            --light: #F8F9FA;
+            --dark: #212529;
+            --gradient: linear-gradient(135deg, #232F3E 0%, #146EB4 100%);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(35, 47, 62, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .mobile-menu {
+            display: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            padding-top: 80px;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: rgba(255, 153, 0, 0.1);
+            border-radius: 50%;
+            top: -200px;
+            right: -200px;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            text-align: center;
+            color: white;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero h2 {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease 0.2s backwards;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.4s backwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            animation: fadeInUp 1s ease 0.6s backwards;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--secondary);
+        }
+
+        .btn-primary:hover {
+            background: #FFB84D;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 153, 0, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: var(--secondary);
+        }
+
+        /* Section Styles */
+        section {
+            padding: 5rem 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--secondary);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: var(--primary);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* About Section */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-text h3 {
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .about-text p {
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .skill-item {
+            background: var(--light);
+            padding: 1rem;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: transform 0.3s;
+        }
+
+        .skill-item:hover {
+            transform: translateX(10px);
+            background: #FFE5CC;
+        }
+
+        .skill-item i {
+            font-size: 2rem;
+            color: var(--primary);
+        }
+
+        /* Certifications */
+        .cert-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .cert-card {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-top: 4px solid var(--primary);
+        }
+
+        .cert-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+
+        .cert-card i {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .cert-card h3 {
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Projects */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .project-video {
+            width: 100%;
+            height: 200px;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-video::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(255,153,0,0.1) 0%, rgba(20,110,180,0.1) 100%);
+        }
+
+        .project-info {
+            padding: 1.5rem;
+        }
+
+        .project-info h3 {
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .tag {
+            background: var(--light);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: var(--accent);
+        }
+
+        /* Contact Section */
+        #contact {
+            background: var(--light);
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .contact-item i {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .contact-form {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--secondary);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid var(--light);
+            border-radius: 5px;
+            font-family: 'Inter', sans-serif;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .whatsapp-btn {
+            background: #25D366;
+            color: white;
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .whatsapp-btn:hover {
+            background: #20BA5A;
+        }
+
+        /* Chat Agent */
+        .chat-widget {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .chat-button {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            transition: transform 0.3s;
+        }
+
+        .chat-button:hover {
+            transform: scale(1.1);
+        }
+
+        .chat-box {
+            display: none;
+            position: absolute;
+            bottom: 80px;
+            right: 0;
+            width: 350px;
+            height: 500px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.3);
+            flex-direction: column;
+        }
+
+        .chat-box.active {
+            display: flex;
+        }
+
+        .chat-header {
+            background: var(--gradient);
+            color: white;
+            padding: 1rem;
+            border-radius: 10px 10px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .message {
+            padding: 0.8rem;
+            border-radius: 8px;
+            max-width: 80%;
+        }
+
+        .message.bot {
+            background: var(--light);
+            align-self: flex-start;
+        }
+
+        .message.user {
+            background: var(--primary);
+            color: white;
+            align-self: flex-end;
+        }
+
+        .chat-input-container {
+            padding: 1rem;
+            border-top: 1px solid var(--light);
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 0.8rem;
+            border: 2px solid var(--light);
+            border-radius: 20px;
+            outline: none;
+        }
+
+        .send-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--secondary);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            color: white;
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: var(--primary);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .about-content,
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+
+            .chat-box {
+                width: 90vw;
+                right: 5vw;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">SN Cloud</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#certifications">Certifications</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="mobile-menu">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Siro Nobert</h1>
+            <h2>AWS Cloud Practitioner | Cloud Solutions Enthusiast</h2>
+            <p>Building scalable, secure, and cost-effective cloud infrastructure solutions</p>
+            <div class="cta-buttons">
+                <a href="#projects" class="btn btn-primary">View My Work</a>
+                <a href="#contact" class="btn btn-secondary">Get In Touch</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="container">
+            <h2 class="section-title">About Me</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>Cloud Infrastructure Specialist</h3>
+                    <p>Hello! I'm Siro Nobert, an AWS Cloud Practitioner with a passion for building robust cloud solutions. With a background in Networks and Communication Systems, I transitioned into cloud computing to help organizations leverage the power of AWS services.</p>
+                    <p>I specialize in designing and implementing cloud architectures that are secure, scalable, and cost-optimized. My experience spans across compute, storage, networking, and database services on AWS.</p>
+                    <p>Currently pursuing advanced AWS certifications while working on real-world cloud migration and deployment projects.</p>
+                </div>
+                <div class="skills-grid">
+                    <div class="skill-item">
+                        <i class="fab fa-aws"></i>
+                        <div>
+                            <strong>AWS Core Services</strong>
+                            <p>EC2, S3, RDS, Lambda</p>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <i class="fas fa-network-wired"></i>
+                        <div>
+                            <strong>Networking</strong>
+                            <p>VPC, Route 53, CloudFront</p>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <i class="fas fa-shield-alt"></i>
+                        <div>
+                            <strong>Security</strong>
+                            <p>IAM, Security Groups, KMS</p>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <i class="fas fa-database"></i>
+                        <div>
+                            <strong>Storage & Database</strong>
+                            <p>S3, EBS, DynamoDB, RDS</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Certifications Section -->
+    <section id="certifications" style="background: var(--light);">
+        <div class="container">
+            <h2 class="section-title">Certifications & Training</h2>
+            <div class="cert-grid">
+                <div class="cert-card">
+                    <i class="fab fa-aws"></i>
+                    <h3>AWS Cloud Practitioner</h3>
+                    <p>Foundational understanding of AWS Cloud services, architecture, and billing</p>
+                    <p><strong>Status:</strong> In Progress</p>
+                </div>
+                <div class="cert-card">
+                    <i class="fas fa-server"></i>
+                    <h3>Cisco CCNA</h3>
+                    <p>Network fundamentals, IP connectivity, and network security</p>
+                    <p><strong>Status:</strong> In Progress</p>
+                </div>
+                <div class="cert-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Network Security</h3>
+                    <p>Cisco Network Defence certification covering cybersecurity principles</p>
+                    <p><strong>Status:</strong> Certified (2025)</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects">
+        <div class="container">
+            <h2 class="section-title">Cloud Projects</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-video">
+                        <i class="fas fa-server"></i>
+                    </div>
+                    <div class="project-info">
+                        <h3>Static Website Hosting on S3</h3>
+                        <p>Deployed a fully responsive static website using Amazon S3 with CloudFront CDN for global distribution and Route 53 for DNS management.</p>
+                        <div class="project-tags">
+                            <span class="tag">S3</span>
+                            <span class="tag">CloudFront</span>
+                            <span class="tag">Route 53</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-video">
+                        <i class="fas fa-cloud"></i>
+                    </div>
+                    <div class="project-info">
+                        <h3>EC2 Web Server Deployment</h3>
+                        <p>Configured and deployed a LAMP stack web server on EC2 with auto-scaling, load balancing, and automated backups.</p>
+                        <div class="project-tags">
+                            <span class="tag">EC2</span>
+                            <span class="tag">ELB</span>
+                            <span class="tag">Auto Scaling</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-video">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <div class="project-info">
+                        <h3>Serverless API with Lambda</h3>
+                        <p>Built a serverless REST API using AWS Lambda, API Gateway, and DynamoDB for a contact management system.</p>
+                        <div class="project-tags">
+                            <span class="tag">Lambda</span>
+                            <span class="tag">API Gateway</span>
+                            <span class="tag">DynamoDB</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-video">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <div class="project-info">
+                        <h3>RDS Database Migration</h3>
+                        <p>Migrated on-premises MySQL database to Amazon RDS with Multi-AZ deployment for high availability and automated backups.</p>
+                        <div class="project-tags">
+                            <span class="tag">RDS</span>
+                            <span class="tag">MySQL</span>
+                            <span class="tag">Multi-AZ</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-video">
+                        <i class="fas fa-network-wired"></i>
+                    </div>
+                    <div class="project-info">
+                        <h3>VPC Network Architecture</h3>
+                        <p>Designed and implemented a secure VPC with public and private subnets, NAT Gateway, and network ACLs for a multi-tier application.</p>
+                        <div class="project-tags">
+                            <span class="tag">VPC</span>
+                            <span class="tag">NAT Gateway</span>
+                            <span class="tag">Security Groups</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-video">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <div class="project-info">
+                        <h3>IAM Security Implementation</h3>
+                        <p>Configured AWS IAM roles, policies, and MFA for secure access management following AWS best practices and principle of least privilege.</p>
+                        <div class="project-tags">
+                            <span class="tag">IAM</span>
+                            <span class="tag">MFA</span>
+                            <span class="tag">Security</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="container">
+            <h2 class="section-title">Get In Touch</h2>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <strong>Email</strong>
+                            <p>snobert24@outlook.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <strong>Phone</strong>
+                            <p>+254703730715</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <strong>Location</strong>
+                            <p>Nairobi, Kenya</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fab fa-linkedin"></i>
+                        <div>
+                            <strong>LinkedIn</strong>
+                            <p>linkedin.com/in/nobertson</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contact-form">
+                    <h3>Send Me a Message</h3>
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input type="text" id="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" id="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Message</label>
+                            <textarea id="message" rows="4" required></textarea>
+                        </div>
+                        <button type="button" class="btn whatsapp-btn" onclick="sendWhatsApp()">
+                            <i class="fab fa-whatsapp"></i> Send via WhatsApp
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Siro Nobert. All rights reserved.</p>
+        <div class="social-links">
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+            <a href="#"><i class="fab fa-github"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fas fa-envelope"></i></a>
+        </div>
+    </footer>
+
+    <!-- Chat Widget -->
+    <div class="chat-widget">
+        <button class="chat-button" onclick="toggleChat()">
+            <i class="fas fa-comments"></i>
+        </button>
+        <div class="chat-box" id="chatBox">
+            <div class="chat-header">
+                <div>
+                    <strong>Cloud Assistant</strong>
+                    <p style="font-size: 0.85rem; opacity: 0.9;">Ask me anything!</p>
+                </div>
+                <button onclick="toggleChat()" style="background: transparent; border: none; color: white; font-size: 1.2rem; cursor: pointer;">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                <div class="message bot">
+                    Hello! I'm Siro's AI assistant. Ask me about his AWS skills, projects, or experience!
+                </div>
+            </div>
+            <div class="chat-input-container">
+                <input type="text" class="chat-input" id="chatInput" placeholder="Type your message...">
+                <button class="send-btn" onclick="sendMessage()">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // WhatsApp Integration
+        function sendWhatsApp() {
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+
+            if (!name || !email || !message) {
+                alert('Please fill in all fields');
+                return;
+            }
+
+            const whatsappMessage = `Hello Siro! My name is ${name}.%0A%0AEmail: ${email}%0A%0AMessage: ${message}`;
+            const whatsappURL = `https://wa.me/254703730715?text=${whatsappMessage}`;
+            
+            window.open(whatsappURL, '_blank');
+        }
+
+        // Chat Widget
+        function toggleChat() {
+            const chatBox = document.getElementById('chatBox');
+            chatBox.classList.toggle('active');
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            
+            if (!message) return;
+
+            // Add user message
+            addMessage(message, 'user');
+            input.value = '';
+
+            // Simulate bot response
+            setTimeout(() => {
+                const response = getBotResponse(message.toLowerCase());
+                addMessage(response, 'bot');
+            }, 500);
+        }
+
+        function addMessage(text, sender) {
+            const messagesContainer = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}`;
+            messageDiv.textContent = text;
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function getBotResponse(message) {
+            const responses = {
+                'aws': 'Siro is an AWS Cloud Practitioner with expertise in EC2, S3, RDS, Lambda, and VPC. He has completed multiple AWS projects including serverless applications and cloud migrations.',
+                'skills': 'Siro specializes in AWS core services, cloud networking, security (IAM, Security Groups), and has a strong background in networks and telecommunications.',
+                'projects': 'Siro has worked on 6+ AWS projects including static website hosting, EC2 deployments, serverless APIs, database migrations, VPC architecture, and IAM security implementations.',
+                'contact': 'You can reach Siro via email at snobert24@outlook.com, phone at +254 703 730 715, or connect on LinkedIn.',
+                'experience': 'Siro has 4+ years of ICT experience including work at Kenya Revenue Authority, Airtel, and University of Eastern Africa. He manages critical infrastructure with 99%+ uptime.',
+                'certification': 'Siro is currently pursuing AWS Cloud Practitioner and CCNA certifications. He already holds Cisco Network Defence and other networking certifications.',
+                'education': 'Siro holds a Bachelor of Science in Networks and Communication Systems from University of Eastern Africa, Baraton with Second Class Upper Division (GPA 3.2/4.0).',
+                'hire': 'Siro is available for cloud consulting, AWS implementation projects, and cloud migration services. Contact him via WhatsApp or email to discuss your needs!'
+            };
+
+            for (let key in responses) {
+                if (message.includes(key)) {
+                    return responses[key];
+                }
+            }
+
+            if (message.includes('hello') || message.includes('hi')) {
+                return 'Hello! How can I help you learn more about Siro\'s AWS expertise?';
+            }
+
+            return 'I can tell you about Siro\'s AWS skills, projects, experience, certifications, or how to contact him. What would you like to know?';
+        }
+
+        // Allow Enter key to send messages
+        document.getElementById('chatInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.style.background = 'rgba(35, 47, 62, 0.98)';
+            } else {
+                nav.style.background = 'rgba(35, 47, 62, 0.95)';
+            }
+        });
+    </script>
+</body>
+</html>
